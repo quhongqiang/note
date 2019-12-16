@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="throttle">节流</button>
+  <button id="debounce">防抖</button>
+</body>
+<script>
+var clickThrottle = document.getElementById('throttle');
+var clickDebounce = document.getElementById('debounce');
+
+clickThrottle.onclick = throttle(function (e) { console.log('哟，切克闹111', e) }, 2000);
+
+clickDebounce.onclick = debounce(function (e) { console.log('哟，切克闹222', e) }, 2000);
+
+// 节流
+function throttle(func, wait) {
+  let startTime = 0;
+  return function () {
+      let args = arguments;
+      let context = this;
+      let nowTime = +new Date();
+      if (nowTime - startTime > wait) {
+          startTime = nowTime;
+          func.apply(context, args)
+      }
+  }
+}
+// 防抖
+function debounce(func, wait) {
+  let timeout;
+  return function () {
+      let context = this;
+      let args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+          func.apply(context, args);
+          console.log(2222)
+      }, wait);
+  }
+}
+</script>
+</html>
